@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- activer la sauvegarde auto -->
+    <!-- icône visible lorsque téléchargement de l'app pour cliquer dessus -->
+    <!-- label = nom de l'app visible -->
+    <!-- round icone = icone mais arrondie -->
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
