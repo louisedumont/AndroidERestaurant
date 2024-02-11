@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 //import androidx.compose.foundation.layout.FlowRowScopeInstance.align
+//import androidx.compose.foundation.layout.FlowRowScopeInstance.align
+//import androidx.compose.foundation.layout.FlowRowScopeInstance.align
 import androidx.compose.ui.Alignment as ComposeAlignment
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,7 +31,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -76,51 +80,6 @@ fun GreetingPreview() {
     }
 }
 
-@Composable
-fun Greeting(menu: MenuInterface) {
-    //definir le fond couleur boutons et les centrer
-    //val buttonBackgroundColor = Color.White
-    //val buttonModifier = Modifier
-       // .background(color = buttonBackgroundColor)
-        //.align(Alignment.CenterVertically)
-    Column ( verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize())
-    {
-        Box(modifier = Modifier.
-        padding(16.dp)
-            .fillMaxSize()
-
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.menuitalian),
-                contentDescription = "Photo menu app",
-                modifier = Modifier
-                    .border(width = 3.dp, color = Color.Gray)
-                    .clip(RoundedCornerShape(10.dp))
-                    .padding((8.dp))
-            )
-            //Image(painterResource(R.drawable.ic_launcher_foreground), null)
-
-
-            Text(
-                text = "Benvenuti chez ItaloResto!",
-                //modifier = Modifier.padding(24.dp)
-                color = Color.White,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .align(Alignment.Center)
-            )
-        }
-
-        ButtonRow(menu = menu)
-    }
-}
-
-
-
 
 
 //definir la fonction pour les boutons
@@ -136,7 +95,7 @@ fun ButtonRow(menu: MenuInterface){
                 containerColor = Color.Gray,
                 contentColor = Color.White,
             )
-            )
+        )
         {
             //Text("Entrees") de cette manière ce n'est pas très adapté il faut appeler les strings dans le fichier .xml
             Text(stringResource(R.string.menu_starter))
@@ -159,6 +118,98 @@ fun ButtonRow(menu: MenuInterface){
         }
     }
 }
+
+
+
+
+
+@Composable
+fun Greeting(menu: MenuInterface) {
+    //definir le fond couleur boutons et les centrer
+    //val buttonBackgroundColor = Color.White
+    //val buttonModifier = Modifier
+    // .background(color = buttonBackgroundColor)
+    //.align(Alignment.CenterVertically)
+    // Column ( verticalArrangement = Arrangement.Center,
+    //  horizontalAlignment = Alignment.CenterHorizontally,
+    // modifier = Modifier
+    //     .fillMaxSize()
+    //    .background(Color.LightGray))
+    // {
+
+
+    Box(
+        modifier = Modifier
+            // padding(16.dp)
+        .fillMaxSize()
+    ) {
+
+        Image(
+            painter = painterResource(id = R.drawable.menuitalian),
+            contentDescription = "Photo menu app",
+            modifier = Modifier
+                .fillMaxSize()
+            //.border(width = 3.dp, color = Color.Gray)
+            //.clip(RoundedCornerShape(20.dp))
+            //.padding((8.dp))
+
+
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                //.padding(16.dp)
+                .align(Alignment.TopCenter)
+        ) {
+
+
+            //Image(painterResource(R.drawable.ic_launcher_foreground), null)
+               Box(
+                   modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color.Black
+                                ),
+                                startY = 0f
+                            )
+                        )
+               )
+
+
+            // Box(
+            //   modifier = Modifier
+            //     .fillMaxSize()
+            //      .padding(12.dp),
+            //    contentAlignment = Alignment.TopCenter
+            //  ) {
+
+                Text(
+                    text = "Benvenuti chez ItaloResto!",
+                    //modifier = Modifier.padding(24.dp)
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(8.dp)
+                    .align(Alignment.Center)
+                )
+
+        }
+
+        ButtonRow(menu = menu)
+    }
+}
+
+
+
+
+
+
+
+
 
 
 
