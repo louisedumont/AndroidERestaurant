@@ -1,6 +1,7 @@
 package fr.isen.dumont.androiderestaurant
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -60,7 +61,35 @@ class HomeActivity : ComponentActivity(), MenuInterface {
                 }
             }
         }
+        //variables optionnelles = AU QCM A SAVOIR!!! représente 90% des crashs dans une appli
+
+        var demonstration: Int?=null //? = la variable peut être nullable
+        val cast = demonstration ?: 0
+        Log.d("DEMO", cast.toString())
+
+        // add(demonstration!!) avec le bang à ne pas faire car ici on dit tkt elle est pas nulle la var sauf qu'avant on a dit qu'elle pouvait être nulle, A NE PAS FAIRE
+
+
+        demonstration?.let{ //autre manière qui est + élégante
+            add(it)
+        }.run{
+            add(demonstration) //SI DEMONSTRATION EST NULL = IF ELSE
+        }
+
+        add(2)
+
+
+        if(demonstration !=null){   //autre méthode avec le test
+            add(demonstration)
+        }
     }
+
+
+    fun add(value:Int?){    //on passe aussi le paramètre en optionnel
+
+    }
+
+
     override fun dishPressed(dishsType: DishsType){
         Toast.makeText(this,"Voici mon toast", Toast.LENGTH_LONG).show()
     }
