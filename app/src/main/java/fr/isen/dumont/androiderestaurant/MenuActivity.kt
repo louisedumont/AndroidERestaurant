@@ -8,6 +8,11 @@ import androidx.activity.compose.setContent
 class MenuActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {  }
+        setContent {
+            override fun onDestroy() {
+                Log.d("Lifecycle", "Menu Activity - onDestroy")
+                super.onDestroy()
+            }
+        }
     }
 }

@@ -60,9 +60,9 @@ class HomeActivity : ComponentActivity(), MenuInterface {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    if (showCategoryScreen) {
+                    /*if (showCategoryScreen) {
                         CategoryScreen()
-                    } else {
+                    } else {*/
                         Greeting(this) //this c'est le MainActivity
                     }
                 }
