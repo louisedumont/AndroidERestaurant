@@ -77,6 +77,20 @@ class HomeActivity : ComponentActivity(), MenuInterface {
         //Toast.makeText(this,"Voici mon toast", Toast.LENGTH_LONG).show()
         Toast.makeText(this, message, Toast.LENGTH_LONG).show() //les toasts ne s'affichent pas sur l'émulateur mais le prof m'a dit que c'était ok
     }
+    override fun onPause() {
+        Log.d("lifeCycle", "Home Activity - OnPause")
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("lifeCycle", "Home Activity - OnResume")
+    }
+
+    override fun onDestroy() {
+        Log.d("lifeCycle", "Home Activity - onDestroy")
+        super.onDestroy()
+    }
 
 }
     @Composable
