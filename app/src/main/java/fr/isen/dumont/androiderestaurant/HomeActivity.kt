@@ -1,5 +1,6 @@
 package fr.isen.dumont.androiderestaurant
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -76,6 +77,8 @@ class HomeActivity : ComponentActivity(), MenuInterface {
         }
         //Toast.makeText(this,"Voici mon toast", Toast.LENGTH_LONG).show()
         Toast.makeText(this, message, Toast.LENGTH_LONG).show() //les toasts ne s'affichent pas sur l'émulateur mais le prof m'a dit que c'était ok
+        val intent = Intent(this, MenuActivity::class.java)
+        startActivity(intent)
     }
     override fun onPause() {
         Log.d("lifeCycle", "Home Activity - OnPause")

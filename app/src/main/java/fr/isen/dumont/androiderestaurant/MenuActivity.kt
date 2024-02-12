@@ -49,9 +49,10 @@ fun MenuView() {
         NetworkConstants.URL,
         params,
         {
-
+           Log.d("request", it.toString(2))
         },
         {
+            Log.e("request", it.toString())
 
         }
     )
