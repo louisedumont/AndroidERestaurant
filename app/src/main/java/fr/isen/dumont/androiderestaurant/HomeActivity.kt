@@ -56,11 +56,25 @@ class HomeActivity : ComponentActivity(), MenuInterface {
         setContent {
             AndroidERestaurantTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting(this) //this c'est le MainActivity
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    if (showCategoryScreen) {
+                        CategoryScreen()
+                    } else {
+                        Greeting(this) //this c'est le MainActivity
+                    }
                 }
             }
         }
+
+    }
+    @Composable
+    fun CategoryScreen(){
+
+
+
         //variables optionnelles = AU QCM A SAVOIR!!! représente 90% des crashs dans une appli
 
         var demonstration: Int?=null //? = la variable peut être nullable
@@ -91,7 +105,13 @@ class HomeActivity : ComponentActivity(), MenuInterface {
 
 
     override fun dishPressed(dishsType: DishsType){
-        Toast.makeText(this,"Voici mon toast", Toast.LENGTH_LONG).show()
+        val message = when(dishsType){
+            DishsType.STARTER -> "Vous avez cliqué sur Entrées"
+            DishsType.MAIN -> "Vous avez cliqué sur Plats"
+            DishsType.DESSERT -> "Vous avez cliqué sur Desserts"
+        }
+        //Toast.makeText(this,"Voici mon toast", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show() //les toasts ne s'affichent pas sur l'émulateur mais le prof m'a dit que c'était ok
     }
 
 }
@@ -196,7 +216,7 @@ fun Greeting(menu: MenuInterface) {
                Box(
                    modifier = Modifier
                         .fillMaxSize()
-                        .background(
+                        /*.background(
                             Brush.verticalGradient(
                                 colors = listOf(
                                     Color.Transparent,
@@ -204,7 +224,7 @@ fun Greeting(menu: MenuInterface) {
                                 ),
                                 startY = 0f
                             )
-                        )
+                        )*/
                )
 
 
