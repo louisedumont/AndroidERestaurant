@@ -64,12 +64,21 @@ class HomeActivity : ComponentActivity(), MenuInterface {
                         CategoryScreen()
                     } else {*/
                         Greeting(this) //this c'est le MainActivity
-                    }
                 }
             }
         }
-
     }
+    override fun dishPressed(dishsType: DishsType){
+        val message = when(dishsType){
+            DishsType.STARTER -> "Vous avez cliqué sur Entrées"
+            DishsType.MAIN -> "Vous avez cliqué sur Plats"
+            DishsType.DESSERT -> "Vous avez cliqué sur Desserts"
+        }
+        //Toast.makeText(this,"Voici mon toast", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show() //les toasts ne s'affichent pas sur l'émulateur mais le prof m'a dit que c'était ok
+    }
+
+}
     @Composable
     fun CategoryScreen(){
 
@@ -104,17 +113,8 @@ class HomeActivity : ComponentActivity(), MenuInterface {
     }
 
 
-    override fun dishPressed(dishsType: DishsType){
-        val message = when(dishsType){
-            DishsType.STARTER -> "Vous avez cliqué sur Entrées"
-            DishsType.MAIN -> "Vous avez cliqué sur Plats"
-            DishsType.DESSERT -> "Vous avez cliqué sur Desserts"
-        }
-        //Toast.makeText(this,"Voici mon toast", Toast.LENGTH_LONG).show()
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show() //les toasts ne s'affichent pas sur l'émulateur mais le prof m'a dit que c'était ok
-    }
 
-}
+
 
 //@PreviewParameter(MenuInterface::class)
 //interface MenuInterface {
