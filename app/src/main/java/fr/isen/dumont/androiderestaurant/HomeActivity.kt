@@ -41,6 +41,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import fr.isen.dumont.androiderestaurant.network.Plats
 
 enum class DishsType {  //regrouper chaque bouton en 1 seule fonction
     STARTER, MAIN, DESSERT;
@@ -279,27 +280,3 @@ fun Greeting(menu: MenuInterface) {
         ButtonRow(menu = menu)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
