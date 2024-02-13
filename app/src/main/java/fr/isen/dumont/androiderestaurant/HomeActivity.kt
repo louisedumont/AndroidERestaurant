@@ -78,6 +78,7 @@ class HomeActivity : ComponentActivity(), MenuInterface {
         //Toast.makeText(this,"Voici mon toast", Toast.LENGTH_LONG).show()
         Toast.makeText(this, message, Toast.LENGTH_LONG).show() //les toasts ne s'affichent pas sur l'émulateur mais le prof m'a dit que c'était ok
         val intent = Intent(this, MenuActivity::class.java)
+        intent.putExtra(MenuActivity.CATEGORY_EXTRA_KEY, dishsType) //on put les données
         startActivity(intent)
     }
     override fun onPause() {
@@ -94,6 +95,8 @@ class HomeActivity : ComponentActivity(), MenuInterface {
         Log.d("lifeCycle", "Home Activity - onDestroy")
         super.onDestroy()
     }
+
+
 
 }
     @Composable

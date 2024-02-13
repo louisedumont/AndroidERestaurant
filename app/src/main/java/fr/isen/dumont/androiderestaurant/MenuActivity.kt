@@ -10,12 +10,16 @@ import androidx.compose.ui.platform.LocalContext
 import com.android.volley.Request.Method
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.GsonBuilder
+import fr.isen.dumont.androiderestaurant.network.MenuResult
 import fr.isen.dumont.androiderestaurant.network.NetworkConstants
 import org.json.JSONObject
 
 class MenuActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val type = (intent.getSerializableExtra(CATEGORY_EXTRA_KEY) as? DishsType) ?: DishsType.STARTER // donne une valeur par défaut type STARTER on get/récupère les infos après avoir put, si le cast ne fonctionne pas (null) on met par défaut l'entrée dans DishsType
         setContent {
             MenuView()
         }
@@ -36,6 +40,10 @@ class MenuActivity : ComponentActivity() {
         Log.d("lifeCycle", "Menu Activity - onDestroy")
         super.onDestroy()
     }
+
+    companion object { //avoir une cste liée à la classe MenuActivity, lier les 2 (dans l'intent), variable statique
+        val CATEGORY_EXTRA_KEY = "CATEGORY_EXTRA_KEY"
+    }
 }
 
 @Composable
@@ -50,6 +58,8 @@ fun MenuView() {
         params,
         {
            Log.d("request", it.toString(2))
+            val result= GsonBuilder().create().fromJson((it.toString()), MenuResult::class.java)
+            Log.d("parse", "")
         },
         {
             Log.e("request", it.toString())
