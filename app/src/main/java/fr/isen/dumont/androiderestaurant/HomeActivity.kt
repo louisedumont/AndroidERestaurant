@@ -43,7 +43,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 enum class DishsType {  //regrouper chaque bouton en 1 seule fonction
-    STARTER, MAIN, DESSERT
+    STARTER, MAIN, DESSERT;
+
+    fun title(): String {
+        return when (this) {
+            DishsType.STARTER -> "Entrées"
+            DishsType.MAIN -> "Plats"
+            DishsType.DESSERT -> "Desserts"
+        }
+    }
 }
 
 interface  MenuInterface {
