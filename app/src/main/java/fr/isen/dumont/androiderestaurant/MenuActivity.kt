@@ -1,5 +1,6 @@
 package fr.isen.dumont.androiderestaurant
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -79,6 +81,7 @@ class MenuActivity : ComponentActivity() {
 }
 @Composable
 fun MenuView(type: DishsType){
+    val context = LocalContext.current
     val category = remember {
         mutableStateOf<Category?>(null)
     }
@@ -95,15 +98,16 @@ fun MenuView(type: DishsType){
             }
         }
 
-
-        //mettre le bouton back home
-        //Button(onClick =
-           // Toast.makeText(this, "Going back Home", Toast.LENGTH_SHORT).show()(
-           // finish()
-       // )
-       // {
-         //   Text(text = "Back")
-       // }
+        // Bouton "Retour"
+        Button(
+            onClick = {
+                Toast.makeText(context, "Retour à l'accueil", Toast.LENGTH_SHORT).show()
+                (context as? ComponentActivity)?.finish() // Terminer l'activité actuelle pour revenir à l'écran précédent (HomeActivity)
+            },
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(text = "Retour")
+        }
 
     }
     postData(type, category)
@@ -111,10 +115,19 @@ fun MenuView(type: DishsType){
 
 
 @Composable
-fun dishRow(dish : Plats){
+fun dishRow(dish : Plats){ //on met Plats ici mais Plats = entrées, plats, desserts, attention confusion
+    val context = LocalContext.current
     Card(
+        Modifier.clickable {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.DISH_EXTRA_KEY, dish) //on put les données, sur le type de plats on demande d'afficher le detailactivity qui contient les ingrédients
+            context.startActivity(intent)
+
+
+        },
         elevation = CardDefaults.cardElevation(
         defaultElevation = 6.dp
+
     )
 
     ){
@@ -140,7 +153,7 @@ fun dishRow(dish : Plats){
             Text(dish.name, Modifier
                 .align(alignment = Alignment.CenterVertically)
                 .padding(8.dp),
-                fontFamily = FontFamily.Monospace
+                //fontFamily = FontFamily.Monospace
             )
             Spacer(modifier = Modifier.weight(1f))
 

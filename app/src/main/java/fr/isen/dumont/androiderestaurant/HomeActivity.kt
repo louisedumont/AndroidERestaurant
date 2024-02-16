@@ -87,7 +87,7 @@ class HomeActivity : ComponentActivity(), MenuInterface {
         //Toast.makeText(this,"Voici mon toast", Toast.LENGTH_LONG).show()
         Toast.makeText(this, message, Toast.LENGTH_LONG).show() //les toasts ne s'affichent pas sur l'émulateur mais le prof m'a dit que c'était ok
         val intent = Intent(this, MenuActivity::class.java)
-        intent.putExtra(MenuActivity.CATEGORY_EXTRA_KEY, dishsType) //on put les données
+        intent.putExtra(MenuActivity.CATEGORY_EXTRA_KEY, dishsType) //on put les données, sur Home on dit si on clique sur un type de plats
         startActivity(intent)
     }
     override fun onPause() {
@@ -268,7 +268,7 @@ fun Greeting(menu: MenuInterface) {
                     text = "Benvenuti chez ItaloResto!",
                     //modifier = Modifier.padding(24.dp)
                     color = Color.White,
-                    fontSize = 20.sp,
+                    fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .padding(8.dp)
