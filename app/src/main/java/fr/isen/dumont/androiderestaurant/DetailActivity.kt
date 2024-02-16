@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -86,6 +87,21 @@ class DetailActivity : ComponentActivity() {
                 //.indent(16.dp)
                 //.spanStyle(SpanStyle(fontSize = 20.sp)) // Style des puces
             )
+
+            Button(
+                onClick = {
+                    Toast.makeText(context, "Total commande", Toast.LENGTH_SHORT).show()
+                    (context as? ComponentActivity)?.finish() // Terminer l'activité actuelle pour revenir à l'écran précédent (HomeActivity)
+                },
+                colors = ButtonDefaults.buttonColors(contentColor = Color.White),
+                shape = RoundedCornerShape(0.dp), // Rectangular shape with 0 dp rounded corners
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .align(Alignment.CenterHorizontally)
+            ) {
+                Text(text = "TOTAL ")}
+
+
             ThreeButtonsRow(dish)
             Button(
                 onClick = {
