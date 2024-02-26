@@ -1,5 +1,6 @@
 package fr.isen.dumont.androiderestaurant
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -34,6 +35,13 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import fr.isen.dumont.androiderestaurant.network.Plats
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.text.style.TextAlign
+import fr.isen.dumont.androiderestaurant.basket.Basket
+import fr.isen.dumont.androiderestaurant.basket.BasketActivity
+import androidx.compose.runtime.*
+
 
 
 class DetailActivity : ComponentActivity() {
@@ -88,21 +96,23 @@ class DetailActivity : ComponentActivity() {
                 //.spanStyle(SpanStyle(fontSize = 20.sp)) // Style des puces
             )
 
-            Button(
-                onClick = {
-                    Toast.makeText(context, "Total commande", Toast.LENGTH_SHORT).show()
-                    (context as? ComponentActivity)?.finish() // Terminer l'activité actuelle pour revenir à l'écran précédent (HomeActivity)
-                },
-                colors = ButtonDefaults.buttonColors(contentColor = Color.White),
-                shape = RoundedCornerShape(0.dp), // Rectangular shape with 0 dp rounded corners
-                modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                Text(text = "TOTAL ")}
+            //Button(
+              //  onClick = {
+                //    Toast.makeText(context, "Total commande", Toast.LENGTH_SHORT).show()
+                  //  (context as? ComponentActivity)?.finish() // Terminer l'activité actuelle pour revenir à l'écran précédent (HomeActivity)
+                //},
+                //colors = ButtonDefaults.buttonColors(contentColor = Color.White),
+                //shape = RoundedCornerShape(0.dp), // Rectangular shape with 0 dp rounded corners
+                //modifier = Modifier
+                  //  .padding(horizontal = 16.dp, vertical = 8.dp)
+                    //.align(Alignment.CenterHorizontally)
+            //) {
+               // Text(text = "AJOUTER AU PANIER")}
 
 
-            ThreeButtonsRow(dish)
+           // ThreeButtonsRow(dish)
+
+            QuantitySelector(dish = dish)
             Button(
                 onClick = {
                     Toast.makeText(context, "Retour à l'accueil", Toast.LENGTH_SHORT).show()
@@ -113,6 +123,7 @@ class DetailActivity : ComponentActivity() {
                     .align(Alignment.CenterHorizontally)
             ) {
                 Text(text = "Retour")
+
             }
         }
     }
@@ -122,58 +133,58 @@ class DetailActivity : ComponentActivity() {
         val context = LocalContext.current
         val backgroundColor = Color.Red
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Button(
-                onClick = {
+       // Row(
+         //   modifier = Modifier
+           //     .fillMaxWidth()
+             //   .padding(16.dp),
+            //horizontalArrangement = Arrangement.SpaceEvenly,
+            //verticalAlignment = Alignment.CenterVertically
+        //) //{
+            //Button(
+              //  onClick = {
                     // Action pour le bouton "Sur place"
-                },
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .padding(1.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor // Couleur rouge pour le bouton "Sur place"
-                )
-            ) {
-                Text(text = "Sur place")
-            }
+                //},
+                //modifier = Modifier
+                  //  .weight(1f)
+                    //.fillMaxWidth()
+                    //.padding(1.dp),
+                //colors = ButtonDefaults.buttonColors(
+                  //  backgroundColor // Couleur rouge pour le bouton "Sur place"
+                //)
+            //) {
+              //  Text(text = "Sur place")
+            //}
 
-            Button(
-                onClick = {
+            //Button(
+              //  onClick = {
                     // Action pour le bouton "Emporter"
-                },
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .padding(1.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor // Couleur rouge pour le bouton "Emporter"
-                )
-            ) {
-                Text(text = "Emporter")
-            }
+                //},
+                //modifier = Modifier
+                   // .weight(1f)
+                    //.fillMaxWidth()
+                   // .padding(1.dp),
+                //colors = ButtonDefaults.buttonColors(
+                  //  backgroundColor // Couleur rouge pour le bouton "Emporter"
+                //)
+            //) {
+                //Text(text = "Emporter")
+            //}
 
-            Button(
-                onClick = {
+            //Button(
+              //  onClick = {
                     // Action pour le bouton "Livraison"
-                },
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .padding(1.dp),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor //  Couleur rouge pour le bouton "Livraison"
-                )
-            ) {
-                Text(text = "Livraison")
-            }
-        }
+                //},
+                //modifier = Modifier
+                  //  .weight(1f)
+                    //.fillMaxWidth()
+                    //.padding(1.dp),
+                //colors = ButtonDefaults.buttonColors(
+                  //  backgroundColor //  Couleur rouge pour le bouton "Livraison"
+                //)
+           // ) {
+                //Text(text = "Livraison")
+            //}
+        //}
     }
 
     //val ingredient = dish?.ingredients?.map { it.name }?.joinToString(", ")?:"" //convertir les ingrédients en ce qu'on veut avec map ici on a une liste de strings et non une liste d'ingrédients, le plat est optionnel donc tout est optionnel derrière
@@ -185,4 +196,50 @@ class DetailActivity : ComponentActivity() {
     companion object {
         val DISH_EXTRA_KEY = "DISH_EXTRA_KEY"
     }
+}
+
+
+@Composable
+fun QuantitySelector(dish: Plats?) {
+    var quantity by remember {mutableStateOf(1) }
+    //dish price string to float
+    val priceInt = dish?.prices?.first()?.price?.toFloat() ?: 0f
+    var totalPrice = priceInt * quantity
+    val context = LocalContext.current
+    Column(
+        modifier = Modifier.padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Quantité: $quantity",
+            fontSize = 16.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        Button(onClick = { if (quantity > 1) quantity-- }) {
+            Text(text = "-")
+        }
+        Button(onClick = { quantity++ }) {
+            Text(text = "+")
+        }
+        Button(onClick = {
+            if (dish != null) {
+                Basket.current(context).add(dish, quantity, context)
+            }
+        }) {
+            Text("Commander")
+        }
+        Button(onClick = {
+            val intent = Intent(context, BasketActivity::class.java)
+            context.startActivity(intent)
+        }) {
+            Text("Voir mon panier")
+        }
+    }
+    Text(
+        text = "Total: $totalPrice €",
+        fontSize = 16.sp,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.padding(8.dp)
+    )
 }

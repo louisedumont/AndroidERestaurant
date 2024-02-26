@@ -60,8 +60,12 @@ fun BasketView() {
 
 
 
-//fun addItemToBasket(item: BasketItem, context: Context: Context){
-   ////}
+    fun addItemToBasket(item: BasketItem, context: Context){
+        //Basket.current(context).addItem(item, context)
+
+
+
+    }
 
 
 @Composable
@@ -99,10 +103,10 @@ fun BasketItemView(item: BasketItem, basketItems: MutableList<BasketItem>) {
 
                 Spacer(Modifier.weight(1f))
 
-                //Button(onClick = {addItemToBasket(item, context)}) {
-                  //  Text("Ajouter au panier")
+                Button(onClick = {addItemToBasket(item, context)}) {
+                    Text("Ajouter au panier")
 
-                //}
+                }
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Text(item.count.toString(),
