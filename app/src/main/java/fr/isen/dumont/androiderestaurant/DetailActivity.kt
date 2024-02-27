@@ -7,13 +7,19 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+//import androidx.compose.foundation.layout.FlowColumnScopeInstance.align
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -206,22 +212,67 @@ fun QuantitySelector(dish: Plats?) {
     val priceInt = dish?.prices?.first()?.price?.toFloat() ?: 0f
     var totalPrice = priceInt * quantity
     val context = LocalContext.current
+
+
+    Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+    ) {
+
+            Button(onClick = { if (quantity > 1) quantity-- }) {
+                Text(
+                    text = "-",
+                    fontSize = 25.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
+            Spacer(modifier = Modifier.height(0.2.dp))
+
+            Text(
+                text = "$quantity",
+                fontSize = 25.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Spacer(modifier = Modifier.height(0.2.dp))
+
+            Button(onClick = { quantity++ }) {
+                Text(
+                    text = "+",
+                    fontSize = 25.sp,
+                    textAlign = TextAlign.Center,
+
+                    )
+            }
+
+    }
+
     Column(
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Ajoutez vos éléments à l'intérieur de cette colonne
         Text(
-            text = "Quantité: $quantity",
-            fontSize = 16.sp,
+            text = "Total: $totalPrice €",
+            fontSize = 20.sp,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+
         )
-        Button(onClick = { if (quantity > 1) quantity-- }) {
-            Text(text = "-")
+
+        Button(onClick = {
+            val intent = Intent(context, BasketActivity::class.java)
+            context.startActivity(intent)
+        }) {
+            Image(
+                painter = painterResource(id = R.drawable.caddi), // Remplacez "votre_image" par le nom de votre image
+                contentDescription = null, // Ajoutez une description si nécessaire
+                modifier = Modifier.size(40.dp) // Modifier la taille de l'image selon vos besoins
+            )
         }
-        Button(onClick = { quantity++ }) {
-            Text(text = "+")
-        }
+
         Button(onClick = {
             if (dish != null) {
                 Basket.current(context).add(dish, quantity, context)
@@ -229,17 +280,7 @@ fun QuantitySelector(dish: Plats?) {
         }) {
             Text("Commander")
         }
-        Button(onClick = {
-            val intent = Intent(context, BasketActivity::class.java)
-            context.startActivity(intent)
-        }) {
-            Text("Voir mon panier")
-        }
+
     }
-    Text(
-        text = "Total: $totalPrice €",
-        fontSize = 16.sp,
-        textAlign = TextAlign.Center,
-        modifier = Modifier.padding(8.dp)
-    )
+
 }
