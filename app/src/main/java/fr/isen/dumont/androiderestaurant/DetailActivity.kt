@@ -295,6 +295,7 @@ fun QuantitySelector(dish: Plats?) {
         )
 
         Button(onClick = {
+            Toast.makeText(context, "Ajouté à votre panier!", Toast.LENGTH_SHORT).show()
             val intent = Intent(context, BasketActivity::class.java)
             context.startActivity(intent)
         }) {

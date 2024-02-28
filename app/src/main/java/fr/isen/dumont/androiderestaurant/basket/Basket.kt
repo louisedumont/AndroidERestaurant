@@ -1,6 +1,7 @@
 package fr.isen.dumont.androiderestaurant.basket
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.GsonBuilder
 import fr.isen.dumont.androiderestaurant.network.Plats
 
@@ -29,6 +30,7 @@ class Basket {
         val editor = sharedPreferences.edit()
         editor.putString(BASKET_PREFERENCES_KEY, json)
         editor.apply()
+        Log.d("basket", "Basket well saved to file")
     }
     companion object {
         fun current(context: Context): Basket {
