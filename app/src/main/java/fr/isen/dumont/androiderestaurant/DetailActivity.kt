@@ -306,7 +306,7 @@ fun QuantitySelector(dish: Plats?) {
         }
 
 
-        Button(onClick = {
+       /* Button(onClick = {
             updateCartItemCount(context, quantity)
             // Création de l'objet JSON avec les informations du plat
             val jsonObject = JSONObject().apply {
@@ -326,15 +326,15 @@ fun QuantitySelector(dish: Plats?) {
         }) {
             Text("Commander")
             }
+*/
 
-
-       /* Button(onClick = {
+       Button(onClick = {
             if (dish != null) {
                 Basket.current(context).add(dish, quantity, context)
             }
         }) {
             Text("Commander")
-        }*/
+        }
 
     }
 

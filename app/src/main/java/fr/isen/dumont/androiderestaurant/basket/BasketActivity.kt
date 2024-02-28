@@ -1,10 +1,12 @@
 package fr.isen.dumont.androiderestaurant.basket
 
-import android.content.Context
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,20 +34,20 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import fr.isen.dumont.androiderestaurant.R
-import fr.isen.dumont.androiderestaurant.network.Plats
+//import fr.isen.dumont.androiderestaurant.DetailActivity
+//import fr.isen.dumont.androiderestaurant.network.Plats
+
 
 class BasketActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             BasketView()
-            //BasketItemView(, basketItems =MutableList<BasketItem> )
         }
     }
 }
 
-@Composable
-fun BasketView() {
+@Composable fun BasketView() {
     val context = LocalContext.current
     val basketItems = remember {
         mutableStateListOf<BasketItem>()
@@ -58,18 +60,7 @@ fun BasketView() {
     basketItems.addAll(Basket.current(context).items)
 }
 
-
-
-    fun addItemToBasket(item: BasketItem, context: Context){
-        //Basket.current(context).addItem(item, context)
-
-
-
-    }
-
-
-@Composable
-fun BasketItemView(item: BasketItem, basketItems: MutableList<BasketItem>) {
+@Composable fun BasketItemView(item: BasketItem, basketItems: MutableList<BasketItem>) {
     Card {
         val context = LocalContext.current
         Card(border =  BorderStroke(1.dp, Color.Black),
@@ -102,13 +93,6 @@ fun BasketItemView(item: BasketItem, basketItems: MutableList<BasketItem>) {
                 }
 
                 Spacer(Modifier.weight(1f))
-
-                Button(onClick = {addItemToBasket(item, context)}) {
-                    Text("Ajouter au panier")
-
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-
                 Text(item.count.toString(),
                     Modifier.align(alignment = Alignment.CenterVertically))
                 Button(onClick = {
@@ -123,4 +107,3 @@ fun BasketItemView(item: BasketItem, basketItems: MutableList<BasketItem>) {
         }
     }
 }
-
