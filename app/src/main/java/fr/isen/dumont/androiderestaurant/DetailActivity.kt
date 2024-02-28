@@ -1,5 +1,6 @@
 package fr.isen.dumont.androiderestaurant
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -41,27 +42,45 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import fr.isen.dumont.androiderestaurant.network.Plats
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Snackbar
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.style.TextAlign
 import fr.isen.dumont.androiderestaurant.basket.Basket
 import fr.isen.dumont.androiderestaurant.basket.BasketActivity
 import androidx.compose.runtime.*
+import org.json.JSONObject
+//import androidx.compose.material3.SnackbarHostController
+import androidx.compose.material3.TextButton
+import com.google.android.material.snackbar.Snackbar
 
+
+fun updateCartItemCount(context: Context, itemCount: Int) {
+    val preferences = context.getSharedPreferences("CartPreferences", Context.MODE_PRIVATE)
+    val editor = preferences.edit()
+    editor.putInt("cartItemCount", itemCount)
+    editor.apply()
+}
 
 
 class DetailActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val dish = intent.getSerializableExtra(DISH_EXTRA_KEY) as? Plats
         setContent() {
             DetailScreen(dish)
+
         }
     }
+
+
 
     @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
     @Composable
     fun DetailScreen(dish: Plats?) {
+
         val context = LocalContext.current
         val pagerState = rememberPagerState {
             dish?.images?.count() ?: 0
@@ -75,7 +94,11 @@ class DetailActivity : ComponentActivity() {
             val formattedIngredients = "• $ingredientList"
 
             TopAppBar({
-                Text(dish?.name ?: "")
+                Text(dish?.name ?: "",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(70.dp),
+
+                    )
             })
             HorizontalPager(state = pagerState) {
                 AsyncImage(
@@ -96,7 +119,8 @@ class DetailActivity : ComponentActivity() {
                 text = formattedIngredients,
                 fontSize = 16.sp,
                 lineHeight = 24.sp,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                textAlign = TextAlign.Center
                 // modifier = Modifier.span
                 //.indent(16.dp)
                 //.spanStyle(SpanStyle(fontSize = 20.sp)) // Style des puces
@@ -208,11 +232,19 @@ class DetailActivity : ComponentActivity() {
 @Composable
 fun QuantitySelector(dish: Plats?) {
     var quantity by remember {mutableStateOf(1) }
+
     //dish price string to float
     val priceInt = dish?.prices?.first()?.price?.toFloat() ?: 0f
     var totalPrice = priceInt * quantity
     val context = LocalContext.current
+    val ingredient = dish?.ingredients?.map { it.name }?.joinToString(", ") ?: ""
 
+    Text(text = ingredient,
+        fontSize = 17.sp,
+        textAlign = TextAlign.Center,
+        )
+
+    Spacer(modifier = Modifier.size(200.dp))
 
     Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -273,13 +305,36 @@ fun QuantitySelector(dish: Plats?) {
             )
         }
 
+
         Button(onClick = {
+            updateCartItemCount(context, quantity)
+            // Création de l'objet JSON avec les informations du plat
+            val jsonObject = JSONObject().apply {
+                put("name", dish?.name)
+                put("price", totalPrice)
+                put("quantity", quantity)
+            }
+
+            // Écriture de l'objet JSON dans un fichier
+            val filename = "basket.json"
+            val fileContents = jsonObject.toString()
+            context.openFileOutput(filename, Context.MODE_PRIVATE).use {
+                it.write(fileContents.toByteArray())
+            }
+            // Affichage d'une Snackbar pour informer l'utilisateur
+            //SnackbarHostController.current?.showSnackbar("Plat ajouté au panier")
+        }) {
+            Text("Commander")
+            }
+
+
+       /* Button(onClick = {
             if (dish != null) {
                 Basket.current(context).add(dish, quantity, context)
             }
         }) {
             Text("Commander")
-        }
+        }*/
 
     }
 
