@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,10 +20,13 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -52,7 +56,9 @@ import androidx.compose.runtime.*
 import org.json.JSONObject
 //import androidx.compose.material3.SnackbarHostController
 import androidx.compose.material3.TextButton
+import androidx.compose.ui.draw.clip
 import com.google.android.material.snackbar.Snackbar
+import fr.isen.dumont.androiderestaurant.basket.BasketItem
 
 
 fun updateCartItemCount(context: Context, itemCount: Int) {
@@ -82,6 +88,11 @@ class DetailActivity : ComponentActivity() {
     fun DetailScreen(dish: Plats?) {
 
         val context = LocalContext.current
+        val basket = Basket.current(context)
+
+        // Afficher l'icône de panier avec la pastille
+        CartIconWithBadge(basketItems = basket.items)
+
         val pagerState = rememberPagerState {
             dish?.images?.count() ?: 0
         }
@@ -340,3 +351,41 @@ fun QuantitySelector(dish: Plats?) {
     }
 
 }
+
+@Composable
+fun CartIconWithBadge(basketItems: List<BasketItem>) {
+        val totalItems = basketItems.sumBy { it.count }
+
+        Box(contentAlignment = Alignment.Center) {
+            // Row pour aligner horizontalement le bouton panier et la pastille
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                // Icône de panier
+                //Image(
+                  //  painter = painterResource(id = R.drawable.caddi),
+                    //contentDescription = null, // Ajoutez une description si nécessaire
+                    //modifier = Modifier.size(24.dp) // Modifier la taille de l'icône selon vos besoins
+                //)
+
+                // Espacement entre l'icône de panier et la pastille
+                Spacer(modifier = Modifier.width(8.dp))
+
+                // Pastille indiquant le nombre d'articles dans le panier
+                if (totalItems > 0) {
+                    Box(
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(Color.Red)
+                            .offset(y = 4.dp) // Décalage vers le bas
+                            .padding(start = 10.dp) // Espacement à droite du bouton panier
+
+                    ) {
+                        Text(
+                            text = totalItems.toString(),
+                            color = Color.White,
+                            fontSize = 12.sp, // Ajustez la taille de la police selon vos besoins
+                            modifier = Modifier.padding(4.dp) // Ajustez les marges du texte selon vos besoins
+                        )
+                    }
+                }
+            }
+        } }
