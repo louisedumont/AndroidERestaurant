@@ -3,6 +3,7 @@ package fr.isen.dumont.androiderestaurant.basket
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -55,15 +56,18 @@ class BasketActivity : ComponentActivity() {
     LazyColumn {
         items(basketItems) {
             BasketItemView(it,basketItems)
+
         }
     }
+
     basketItems.addAll(Basket.current(context).items)
 }
 
 @Composable fun BasketItemView(item: BasketItem, basketItems: MutableList<BasketItem>) {
     Card {
         val context = LocalContext.current
-        Card(border =  BorderStroke(1.dp, Color.Black),
+        Card(
+            border = BorderStroke(1.dp, Color.Black),
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth()
@@ -93,8 +97,10 @@ class BasketActivity : ComponentActivity() {
                 }
 
                 Spacer(Modifier.weight(1f))
-                Text(item.count.toString(),
-                    Modifier.align(alignment = Alignment.CenterVertically))
+                Text(
+                    item.count.toString(),
+                    Modifier.align(alignment = Alignment.CenterVertically)
+                )
                 Button(onClick = {
                     // delete item and redraw view
                     Basket.current(context).delete(item, context)
@@ -106,4 +112,9 @@ class BasketActivity : ComponentActivity() {
             }
         }
     }
+
 }
+
+
+
+

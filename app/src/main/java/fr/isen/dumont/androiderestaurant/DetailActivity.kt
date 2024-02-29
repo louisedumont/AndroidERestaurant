@@ -352,40 +352,47 @@ fun QuantitySelector(dish: Plats?) {
 
 }
 
+
 @Composable
 fun CartIconWithBadge(basketItems: List<BasketItem>) {
-        val totalItems = basketItems.sumBy { it.count }
+    // Utilisez un MutableState pour stocker le nombre d'articles dans le panier
+    var totalItems by remember { mutableStateOf(0) }
 
-        Box(contentAlignment = Alignment.Center) {
-            // Row pour aligner horizontalement le bouton panier et la pastille
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                // Icône de panier
-                //Image(
-                  //  painter = painterResource(id = R.drawable.caddi),
-                    //contentDescription = null, // Ajoutez une description si nécessaire
-                    //modifier = Modifier.size(24.dp) // Modifier la taille de l'icône selon vos besoins
-                //)
+    // Mettez à jour la valeur du MutableState chaque fois que le panier change
+    totalItems = basketItems.sumBy { it.count }
 
-                // Espacement entre l'icône de panier et la pastille
-                Spacer(modifier = Modifier.width(8.dp))
+    // Utilisez un Box pour superposer l'icône du panier et la pastille
+    Box(contentAlignment = Alignment.Center) {
+        // Utilisez un Row pour aligner l'icône du panier et le texte de la pastille horizontalement
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            // Icône de panier
+            Image(
+                painter = painterResource(id = R.drawable.caddi),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
 
+            // Espacement entre l'icône de panier et la pastille
+            Spacer(modifier = Modifier.width(8.dp))
+
+            // Affichez la pastille uniquement si le nombre d'articles est supérieur à zéro
+            if (totalItems > 0) {
                 // Pastille indiquant le nombre d'articles dans le panier
-                if (totalItems > 0) {
-                    Box(
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .background(Color.Red)
-                            .offset(y = 4.dp) // Décalage vers le bas
-                            .padding(start = 10.dp) // Espacement à droite du bouton panier
-
-                    ) {
-                        Text(
-                            text = totalItems.toString(),
-                            color = Color.White,
-                            fontSize = 12.sp, // Ajustez la taille de la police selon vos besoins
-                            modifier = Modifier.padding(4.dp) // Ajustez les marges du texte selon vos besoins
-                        )
-                    }
+                Box(
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .background(Color.Red)
+                        .offset(y = (-8).dp) // Décalage vers le haut
+                        .padding(horizontal = 4.dp) // Espacement autour du texte de la pastille
+                ) {
+                    Text(
+                        text = totalItems.toString(),
+                        color = Color.White,
+                        fontSize = 12.sp,
+                        modifier = Modifier.padding(4.dp)
+                    )
                 }
             }
-        } }
+        }
+    }
+}
