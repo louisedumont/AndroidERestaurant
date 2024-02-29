@@ -28,6 +28,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -75,11 +76,17 @@ class DetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val dish = intent.getSerializableExtra(DISH_EXTRA_KEY) as? Plats
+
         setContent() {
             DetailScreen(dish)
 
+
+
         }
     }
+
+
+
 
 
 
@@ -90,8 +97,6 @@ class DetailActivity : ComponentActivity() {
         val context = LocalContext.current
         val basket = Basket.current(context)
 
-        // Afficher l'icône de panier avec la pastille
-        CartIconWithBadge(basketItems = basket.items)
 
         val pagerState = rememberPagerState {
             dish?.images?.count() ?: 0
@@ -100,7 +105,9 @@ class DetailActivity : ComponentActivity() {
         Column(modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
-            .fillMaxHeight()) {
+            .fillMaxHeight()
+            //.background(Color.LightGray) // Définir la couleur de fond LightGray
+        ) {
             val ingredientList = dish?.ingredients?.joinToString("\n• ") { it.name } ?: ""
             val formattedIngredients = "• $ingredientList"
 
@@ -309,7 +316,8 @@ fun QuantitySelector(dish: Plats?) {
             Toast.makeText(context, "Ajouté à votre panier!", Toast.LENGTH_SHORT).show()
             val intent = Intent(context, BasketActivity::class.java)
             context.startActivity(intent)
-        }) {
+        }
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.caddi), // Remplacez "votre_image" par le nom de votre image
                 contentDescription = null, // Ajoutez une description si nécessaire
@@ -354,43 +362,56 @@ fun QuantitySelector(dish: Plats?) {
 
 
 @Composable
-fun CartIconWithBadge(basketItems: List<BasketItem>) {
+fun CartIconWithBadge(basketItems: List<BasketItem>, onClick: () -> Unit) {
     // Utilisez un MutableState pour stocker le nombre d'articles dans le panier
     var totalItems by remember { mutableStateOf(0) }
 
     // Mettez à jour la valeur du MutableState chaque fois que le panier change
     totalItems = basketItems.sumBy { it.count }
 
-    // Utilisez un Box pour superposer l'icône du panier et la pastille
-    Box(contentAlignment = Alignment.Center) {
-        // Utilisez un Row pour aligner l'icône du panier et le texte de la pastille horizontalement
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            // Icône de panier
-            Image(
-                painter = painterResource(id = R.drawable.caddi),
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
 
-            // Espacement entre l'icône de panier et la pastille
-            Spacer(modifier = Modifier.width(8.dp))
+    Button(onClick = onClick) {
 
-            // Affichez la pastille uniquement si le nombre d'articles est supérieur à zéro
-            if (totalItems > 0) {
-                // Pastille indiquant le nombre d'articles dans le panier
-                Box(
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(Color.Red)
-                        .offset(y = (-8).dp) // Décalage vers le haut
-                        .padding(horizontal = 4.dp) // Espacement autour du texte de la pastille
-                ) {
-                    Text(
-                        text = totalItems.toString(),
-                        color = Color.White,
-                        fontSize = 12.sp,
-                        modifier = Modifier.padding(4.dp)
-                    )
+        // Utilisez un Box pour superposer l'icône du panier et la pastille
+        Box(
+            contentAlignment = Alignment.BottomEnd,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            // Utilisez un Row pour aligner l'icône du panier et le texte de la pastille horizontalement
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                // Icône de panier
+                Image(
+                    painter = painterResource(id = R.drawable.caddi),
+                    contentDescription = null,
+                    modifier = Modifier.size(26.dp)
+                )
+
+                // Espacement entre l'icône de panier et la pastille
+                //Spacer(modifier = Modifier.width(1.dp))
+
+                // Affichez la pastille uniquement si le nombre d'articles est supérieur à zéro
+                if (totalItems > 0) {
+                    // Pastille indiquant le nombre d'articles dans le panier
+                    Box(
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(Color.Red)
+                            //.offset(y = (-2).dp) // Décalage vers le haut
+                            .padding(
+                                horizontal = 4.dp,
+                                vertical = 2.dp
+                            ) // Espacement autour de la pastille
+                            .size(15.dp)
+                    ) {
+                        Text(
+                            text = totalItems.toString(),
+                            color = Color.White,
+                            fontSize = 12.sp,
+                            //modifier = Modifier.padding(4.dp)
+                        )
+                    }
                 }
             }
         }

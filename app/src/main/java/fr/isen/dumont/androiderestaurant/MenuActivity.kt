@@ -47,12 +47,15 @@ import fr.isen.dumont.androiderestaurant.network.NetworkConstants
 import fr.isen.dumont.androiderestaurant.network.Plats
 import org.json.JSONObject
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.Surface
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+
 
 class MenuActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val type = (intent.getSerializableExtra(CATEGORY_EXTRA_KEY) as? DishsType) ?: DishsType.STARTER // donne une valeur par défaut type STARTER on get/récupère les infos après avoir put, si le cast ne fonctionne pas (null) on met par défaut l'entrée dans DishsType
         setContent {
             MenuView(type)
@@ -80,39 +83,41 @@ class MenuActivity : ComponentActivity() {
     }
 }
 @Composable
-fun MenuView(type: DishsType){
+fun MenuView(type: DishsType) {
     val context = LocalContext.current
     val category = remember {
         mutableStateOf<Category?>(null)
     }
+    Surface(color = Color.LightGray) {
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(type.title())
-        LazyColumn (contentPadding = PaddingValues(vertical = 50.dp)){//colonnes pour gérer un grand nombre de colonnes
-            category.value?.let {
-                items(it.items) {
-                    dishRow(it)
-                    Spacer(modifier = Modifier.height(30.dp))
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(type.title(), fontSize = 25.sp, color = Color.White, fontWeight = FontWeight.Bold
+            )
+            LazyColumn(contentPadding = PaddingValues(vertical = 50.dp)) {//colonnes pour gérer un grand nombre de colonnes
+                category.value?.let {
+                    items(it.items) {
+                        dishRow(it)
+                        Spacer(modifier = Modifier.height(30.dp))
+                    }
+
                 }
-
             }
-        }
 
-        // Bouton "Retour"
-        Button(
-            onClick = {
-                Toast.makeText(context, "Retour à l'accueil", Toast.LENGTH_SHORT).show()
-                (context as? ComponentActivity)?.finish() // Terminer l'activité actuelle pour revenir à l'écran précédent (HomeActivity)
-            },
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(text = "Retour")
-        }
+            // Bouton "Retour"
+            Button(
+                onClick = {
+                    Toast.makeText(context, "Retour à l'accueil", Toast.LENGTH_SHORT).show()
+                    (context as? ComponentActivity)?.finish() // Terminer l'activité actuelle pour revenir à l'écran précédent (HomeActivity)
+                },
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text(text = "Retour")
+            }
 
+        }
+        postData(type, category)
     }
-    postData(type, category)
 }
-
 
 @Composable
 fun dishRow(dish : Plats){ //on met Plats ici mais Plats = entrées, plats, desserts, attention confusion
@@ -154,6 +159,9 @@ fun dishRow(dish : Plats){ //on met Plats ici mais Plats = entrées, plats, dess
                 .align(alignment = Alignment.CenterVertically)
                 .padding(8.dp),
                 //fontFamily = FontFamily.Monospace
+                color = Color.White, // Changer la couleur du texte ici
+                fontWeight = FontWeight.Bold,
+
             )
             Spacer(modifier = Modifier.weight(1f))
 

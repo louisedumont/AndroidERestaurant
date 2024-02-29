@@ -68,7 +68,8 @@ class HomeActivity : ComponentActivity(), MenuInterface {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    //color = MaterialTheme.colorScheme.background
+                    color = Color.LightGray
                 ) {
                     /*if (showCategoryScreen) {
                         CategoryScreen()
@@ -204,7 +205,7 @@ fun ButtonRow(menu: MenuInterface){
 @Composable
 fun Greeting(menu: MenuInterface) {
     //definir le fond couleur boutons et les centrer
-    //val buttonBackgroundColor = Color.White
+   // val buttonBackgroundColor = Color.LightGray
     //val buttonModifier = Modifier
     // .background(color = buttonBackgroundColor)
     //.align(Alignment.CenterVertically)
@@ -219,7 +220,9 @@ fun Greeting(menu: MenuInterface) {
     Box(
         modifier = Modifier
             // padding(16.dp)
-        .fillMaxSize()
+            .fillMaxSize()
+            .background(color = Color.LightGray) // Changer la couleur de fond ici
+
     ) {
 
         Image(
@@ -272,7 +275,7 @@ fun Greeting(menu: MenuInterface) {
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .padding(8.dp)
-                    .align(Alignment.Center)
+                        .align(Alignment.Center)
                 )
 
         }
