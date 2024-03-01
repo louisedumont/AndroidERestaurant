@@ -132,7 +132,7 @@ fun dishRow(dish : Plats){ //on met Plats ici mais Plats = entrées, plats, dess
                     .build(),
                         null,
                 placeholder = painterResource(R.drawable.ic_launcher_foreground),
-                error = painterResource(R.drawable.ic_launcher_foreground),
+                error = painterResource(R.drawable.chef_restaurant_food_icon),
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .width(80.dp)

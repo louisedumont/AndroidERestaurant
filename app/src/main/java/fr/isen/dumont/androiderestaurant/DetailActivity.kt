@@ -105,7 +105,7 @@ class DetailActivity : ComponentActivity() {
                         .build(),
                     null,
                     placeholder = painterResource(R.drawable.ic_launcher_foreground),
-                    error = painterResource(R.drawable.ic_launcher_foreground),
+                    error = painterResource(R.drawable.chef_restaurant_food_icon),
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
                         .height(200.dp)
