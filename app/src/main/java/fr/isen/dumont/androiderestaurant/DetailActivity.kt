@@ -117,7 +117,8 @@ class DetailActivity : ComponentActivity() {
                 Text(
                     text = formattedIngredients,
                     fontSize = 16.sp,
-                    lineHeight = 24.sp
+                    lineHeight = 24.sp,
+                    color = Color.Blue
 
                 )
             }
