@@ -32,12 +32,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import fr.isen.dumont.androiderestaurant.R
 //import fr.isen.dumont.androiderestaurant.DetailActivity
 //import fr.isen.dumont.androiderestaurant.network.Plats
-
 
 class BasketActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +47,6 @@ class BasketActivity : ComponentActivity() {
         }
     }
 }
-
 @Composable fun BasketView() {
     val context = LocalContext.current
     val basketItems = remember {
@@ -56,13 +55,10 @@ class BasketActivity : ComponentActivity() {
     LazyColumn {
         items(basketItems) {
             BasketItemView(it,basketItems)
-
         }
     }
-
     basketItems.addAll(Basket.current(context).items)
 }
-
 @Composable fun BasketItemView(item: BasketItem, basketItems: MutableList<BasketItem>) {
     Card {
         val context = LocalContext.current
@@ -92,7 +88,7 @@ class BasketActivity : ComponentActivity() {
                         .align(alignment = Alignment.CenterVertically)
                         .padding(8.dp)
                 ) {
-                    Text(item.dish.name)
+                    Text(item.dish.name, fontSize = 10.sp)
                     Text("${item.dish.prices.first().price} €")
                 }
 
@@ -112,9 +108,5 @@ class BasketActivity : ComponentActivity() {
             }
         }
     }
-
 }
-
-
-
 

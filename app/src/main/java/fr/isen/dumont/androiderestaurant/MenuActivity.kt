@@ -62,22 +62,18 @@ class MenuActivity : ComponentActivity() {
         }
         Log.d("lifeCycle", "Menu Activity - OnCreate")
     }
-
     override fun onPause() {
         Log.d("lifeCycle", "Menu Activity - OnPause")
         super.onPause()
     }
-
     override fun onResume() {
         super.onResume()
         Log.d("lifeCycle", "Menu Activity - OnResume")
     }
-
     override fun onDestroy() {
         Log.d("lifeCycle", "Menu Activity - onDestroy")
         super.onDestroy()
     }
-
     companion object { //avoir une cste liée à la classe MenuActivity, lier les 2 (dans l'intent), variable statique
         val CATEGORY_EXTRA_KEY = "CATEGORY_EXTRA_KEY"
     }
@@ -102,7 +98,6 @@ fun MenuView(type: DishsType) {
 
                 }
             }
-
             // Bouton "Retour"
             Button(
                 onClick = {
@@ -127,12 +122,9 @@ fun dishRow(dish : Plats){ //on met Plats ici mais Plats = entrées, plats, dess
             val intent = Intent(context, DetailActivity::class.java)
             intent.putExtra(DetailActivity.DISH_EXTRA_KEY, dish) //on put les données, sur le type de plats on demande d'afficher le detailactivity qui contient les ingrédients
             context.startActivity(intent)
-
-
         },
         elevation = CardDefaults.cardElevation(
         defaultElevation = 6.dp
-
     )
 
     ){
@@ -161,7 +153,6 @@ fun dishRow(dish : Plats){ //on met Plats ici mais Plats = entrées, plats, dess
                 //fontFamily = FontFamily.Monospace
                 color = Color.White, // Changer la couleur du texte ici
                 fontWeight = FontWeight.Bold,
-
             )
             Spacer(modifier = Modifier.weight(1f))
 
@@ -171,9 +162,6 @@ fun dishRow(dish : Plats){ //on met Plats ici mais Plats = entrées, plats, dess
             }
         }
     }
-
-
-
 
 @Composable
 fun postData(type: DishsType, category: MutableState<Category?>) {
@@ -201,5 +189,3 @@ fun postData(type: DishsType, category: MutableState<Category?>) {
     )
     queue.add(request)
 }
-
-

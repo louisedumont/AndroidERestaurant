@@ -45,7 +45,6 @@ import fr.isen.dumont.androiderestaurant.network.Plats
 
 enum class DishsType {  //regrouper chaque bouton en 1 seule fonction
     STARTER, MAIN, DESSERT;
-
     fun title(): String {
         return when (this) {
             DishsType.STARTER -> "Entrées"
@@ -54,12 +53,9 @@ enum class DishsType {  //regrouper chaque bouton en 1 seule fonction
         }
     }
 }
-
 interface  MenuInterface {
     fun dishPressed(dishsType: DishsType) //on crée un toast, il faut créer une interface qui va lister les fcts que l'activité  a besoin pour le passer en paramètres
 }
-
-
 class HomeActivity : ComponentActivity(), MenuInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,12 +64,8 @@ class HomeActivity : ComponentActivity(), MenuInterface {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    //color = MaterialTheme.colorScheme.background
                     color = Color.LightGray
                 ) {
-                    /*if (showCategoryScreen) {
-                        CategoryScreen()
-                    } else {*/
                         Greeting(this) //this c'est le MainActivity
                 }
             }
@@ -85,7 +77,6 @@ class HomeActivity : ComponentActivity(), MenuInterface {
             DishsType.MAIN -> "Vous avez cliqué sur Plats"
             DishsType.DESSERT -> "Vous avez cliqué sur Desserts"
         }
-        //Toast.makeText(this,"Voici mon toast", Toast.LENGTH_LONG).show()
         Toast.makeText(this, message, Toast.LENGTH_LONG).show() //les toasts ne s'affichent pas sur l'émulateur mais le prof m'a dit que c'était ok
         val intent = Intent(this, MenuActivity::class.java)
         intent.putExtra(MenuActivity.CATEGORY_EXTRA_KEY, dishsType) //on put les données, sur Home on dit si on clique sur un type de plats
@@ -95,25 +86,17 @@ class HomeActivity : ComponentActivity(), MenuInterface {
         Log.d("lifeCycle", "Home Activity - OnPause")
         super.onPause()
     }
-
     override fun onResume() {
         super.onResume()
         Log.d("lifeCycle", "Home Activity - OnResume")
     }
-
     override fun onDestroy() {
         Log.d("lifeCycle", "Home Activity - onDestroy")
         super.onDestroy()
     }
-
-
-
 }
     @Composable
     fun CategoryScreen(){
-
-
-
         //variables optionnelles = AU QCM A SAVOIR!!! représente 90% des crashs dans une appli
 
         var demonstration: Int?=null //? = la variable peut être nullable
@@ -122,34 +105,18 @@ class HomeActivity : ComponentActivity(), MenuInterface {
 
         // add(demonstration!!) avec le bang à ne pas faire car ici on dit tkt elle est pas nulle la var sauf qu'avant on a dit qu'elle pouvait être nulle, A NE PAS FAIRE
 
-
         demonstration?.let{ //autre manière qui est + élégante
             add(it)
         }.run{
             add(demonstration) //SI DEMONSTRATION EST NULL = IF ELSE
         }
-
         add(2)
-
-
         if(demonstration !=null){   //autre méthode avec le test
             add(demonstration)
         }
     }
-
-
     fun add(value:Int?){    //on passe aussi le paramètre en optionnel
-
     }
-
-
-
-
-
-//@PreviewParameter(MenuInterface::class)
-//interface MenuInterface {
-//  fun dishPressed(dishsType: DishsType)
-//}
 
 @Preview(showBackground = true)
 @Composable
@@ -159,8 +126,6 @@ fun GreetingPreview() {
     }
 }
 
-
-
 //definir la fonction pour les boutons
 @Composable
 fun ButtonRow(menu: MenuInterface){
@@ -168,7 +133,6 @@ fun ButtonRow(menu: MenuInterface){
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth())
     {
-
         Button(onClick = {menu.dishPressed(DishsType.STARTER) },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Gray,
@@ -197,44 +161,19 @@ fun ButtonRow(menu: MenuInterface){
         }
     }
 }
-
-
-
-
-
 @Composable
 fun Greeting(menu: MenuInterface) {
-    //definir le fond couleur boutons et les centrer
-   // val buttonBackgroundColor = Color.LightGray
-    //val buttonModifier = Modifier
-    // .background(color = buttonBackgroundColor)
-    //.align(Alignment.CenterVertically)
-    // Column ( verticalArrangement = Arrangement.Center,
-    //  horizontalAlignment = Alignment.CenterHorizontally,
-    // modifier = Modifier
-    //     .fillMaxSize()
-    //    .background(Color.LightGray))
-    // {
-
-
     Box(
         modifier = Modifier
             // padding(16.dp)
             .fillMaxSize()
             .background(color = Color.LightGray) // Changer la couleur de fond ici
-
     ) {
-
         Image(
             painter = painterResource(id = R.drawable.menuitalian),
             contentDescription = "Photo menu app",
             modifier = Modifier
                 .fillMaxSize()
-            //.border(width = 3.dp, color = Color.Gray)
-            //.clip(RoundedCornerShape(20.dp))
-            //.padding((8.dp))
-
-
         )
         Box(
             modifier = Modifier
@@ -242,31 +181,11 @@ fun Greeting(menu: MenuInterface) {
                 //.padding(16.dp)
                 .align(Alignment.TopCenter)
         ) {
-
-
-            //Image(painterResource(R.drawable.ic_launcher_foreground), null)
                Box(
                    modifier = Modifier
                         .fillMaxSize()
-                        /*.background(
-                            Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.Transparent,
-                                    Color.Black
-                                ),
-                                startY = 0f
-                            )
-                        )*/
+
                )
-
-
-            // Box(
-            //   modifier = Modifier
-            //     .fillMaxSize()
-            //      .padding(12.dp),
-            //    contentAlignment = Alignment.TopCenter
-            //  ) {
-
                 Text(
                     text = "Benvenuti chez ItaloResto!",
                     //modifier = Modifier.padding(24.dp)
@@ -277,9 +196,7 @@ fun Greeting(menu: MenuInterface) {
                         .padding(8.dp)
                         .align(Alignment.Center)
                 )
-
         }
-
         ButtonRow(menu = menu)
     }
 }
