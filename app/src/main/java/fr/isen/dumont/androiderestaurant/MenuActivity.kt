@@ -47,11 +47,11 @@ import fr.isen.dumont.androiderestaurant.network.NetworkConstants
 import fr.isen.dumont.androiderestaurant.network.Plats
 import org.json.JSONObject
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-
 
 class MenuActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,8 +84,7 @@ fun MenuView(type: DishsType) {
     val category = remember {
         mutableStateOf<Category?>(null)
     }
-    Surface(color = Color.LightGray) {
-
+    Surface(modifier = Modifier.fillMaxSize(),color = Color.LightGray) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(type.title(), fontSize = 25.sp, color = Color.White, fontWeight = FontWeight.Bold
             )
@@ -95,7 +94,6 @@ fun MenuView(type: DishsType) {
                         dishRow(it)
                         Spacer(modifier = Modifier.height(30.dp))
                     }
-
                 }
             }
             // Bouton "Retour"
@@ -108,7 +106,6 @@ fun MenuView(type: DishsType) {
             ) {
                 Text(text = "Retour")
             }
-
         }
         postData(type, category)
     }
@@ -126,7 +123,6 @@ fun dishRow(dish : Plats){ //on met Plats ici mais Plats = entrées, plats, dess
         elevation = CardDefaults.cardElevation(
         defaultElevation = 6.dp
     )
-
     ){
         Row(
             Modifier.background(Color.Gray)){

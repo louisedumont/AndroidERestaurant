@@ -119,7 +119,6 @@ class DetailActivity : ComponentActivity() {
                     fontSize = 16.sp,
                     lineHeight = 24.sp,
                     color = Color.Blue
-
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
@@ -176,7 +175,6 @@ fun QuantitySelector(dish: Plats?) {
                     )
             }
     }
-
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
@@ -231,6 +229,7 @@ fun QuantitySelector(dish: Plats?) {
         }
     }
 }
+//pour ajouter un article au panier, il faut cliquer sur + ou -, puis commander, puis panier pour visualiser notre panier total
 @Composable
 fun CartIconWithBadge(basketItems: List<BasketItem>, onClick: () -> Unit) {
     // Utilisation d'un MutableState pour stocker le nombre d'articles dans le panier

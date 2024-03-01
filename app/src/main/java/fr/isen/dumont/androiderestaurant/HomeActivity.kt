@@ -149,7 +149,6 @@ fun ButtonRow(menu: MenuInterface){
         {
             //Text("Plats")
             Text(stringResource(R.string.menu_main))
-
         }
         Button(onClick = {menu.dishPressed(DishsType.DESSERT) },
             colors = ButtonDefaults.buttonColors(containerColor = Color.Gray,
@@ -157,7 +156,6 @@ fun ButtonRow(menu: MenuInterface){
         {
             //Text("Desserts")
             Text(stringResource(R.string.menu_dessert))
-
         }
     }
 }

@@ -91,7 +91,6 @@ class BasketActivity : ComponentActivity() {
                     Text(item.dish.name, fontSize = 10.sp)
                     Text("${item.dish.prices.first().price} €")
                 }
-
                 Spacer(Modifier.weight(1f))
                 Text(
                     item.count.toString(),
