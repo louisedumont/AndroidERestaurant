@@ -181,7 +181,7 @@ fun QuantitySelector(dish: Plats?) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Ajoutez vos éléments à l'intérieur de cette colonne
+        // Ajoutez mes éléments à l'intérieur de cette colonne
         Text(
             text = "Total: $totalPrice €",
             fontSize = 20.sp,
@@ -232,19 +232,19 @@ fun QuantitySelector(dish: Plats?) {
 }
 @Composable
 fun CartIconWithBadge(basketItems: List<BasketItem>, onClick: () -> Unit) {
-    // Utilisez un MutableState pour stocker le nombre d'articles dans le panier
+    // Utilisation d'un MutableState pour stocker le nombre d'articles dans le panier
     var totalItems by remember { mutableStateOf(0) }
-    // Mettez à jour la valeur du MutableState chaque fois que le panier change
+    // Mise à jour de la valeur du MutableState chaque fois que le panier change
     totalItems = basketItems.sumBy { it.count }
     Button(onClick = onClick) {
-        // Utilisez un Box pour superposer l'icône du panier et la pastille
+        // Utilisation d'une Box pour superposer l'icône du panier et la pastille
         Box(
             contentAlignment = Alignment.BottomEnd,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            // Utilisez un Row pour aligner l'icône du panier et le texte de la pastille horizontalement
+            // Utilisation d'un Row pour aligner l'icône du panier et le texte de la pastille horizontalement
             Row(verticalAlignment = Alignment.CenterVertically) {
                 // Icône de panier
                 Image(
@@ -252,7 +252,7 @@ fun CartIconWithBadge(basketItems: List<BasketItem>, onClick: () -> Unit) {
                     contentDescription = null,
                     modifier = Modifier.size(26.dp)
                 )
-                // Affichez la pastille uniquement si le nombre d'articles est supérieur à zéro
+                // Affichage de la pastille uniquement si le nombre d'articles est supérieur à zéro
                 if (totalItems > 0) {
                     // Pastille indiquant le nombre d'articles dans le panier
                     Box(

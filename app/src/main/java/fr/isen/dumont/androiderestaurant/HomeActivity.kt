@@ -43,7 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import fr.isen.dumont.androiderestaurant.network.Plats
 
-enum class DishsType {  //regrouper chaque bouton en 1 seule fonction
+enum class DishsType {  //pour regrouper chaque bouton en 1 seule fonction
     STARTER, MAIN, DESSERT;
     fun title(): String {
         return when (this) {
@@ -66,7 +66,7 @@ class HomeActivity : ComponentActivity(), MenuInterface {
                     modifier = Modifier.fillMaxSize(),
                     color = Color.LightGray
                 ) {
-                        Greeting(this) //this c'est le MainActivity
+                        Greeting(this) //this correspond au MainActivity
                 }
             }
         }

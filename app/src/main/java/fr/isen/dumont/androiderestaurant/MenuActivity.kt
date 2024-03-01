@@ -150,7 +150,6 @@ fun dishRow(dish : Plats){ //on met Plats ici mais Plats = entrées, plats, dess
             Text(dish.name, Modifier
                 .align(alignment = Alignment.CenterVertically)
                 .padding(8.dp),
-                //fontFamily = FontFamily.Monospace
                 color = Color.White, // Changer la couleur du texte ici
                 fontWeight = FontWeight.Bold,
             )
@@ -184,7 +183,6 @@ fun postData(type: DishsType, category: MutableState<Category?>) {
         },
         {
             Log.e("request", it.toString())
-
         }
     )
     queue.add(request)
